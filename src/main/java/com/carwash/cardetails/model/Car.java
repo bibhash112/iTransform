@@ -1,21 +1,18 @@
 package com.carwash.cardetails.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection="Car")
+
 public class Car {
-	
-	@Id
-	private int id;
+
+	private String id;
 	private String owner;
 	private String type;
 	private String model;
 	
 	public Car() {}
 
-	public Car(int id, String owner, String type, String model) {
+	public Car(String id, String owner, String type, String model) {
 		super();
 		this.id = id;
 		this.owner = owner;
@@ -23,11 +20,11 @@ public class Car {
 		this.model = model;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

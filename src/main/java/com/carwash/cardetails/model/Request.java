@@ -3,7 +3,7 @@ package com.carwash.cardetails.model;
 public class Request {
 	
 	private String httpMethod;
-	private int id;
+	private String id;
 	private Car car;
 	public String getHttpMethod() {
 		return httpMethod;
@@ -11,10 +11,10 @@ public class Request {
 	public void setHttpMethod(String httpMethod) {
 		this.httpMethod = httpMethod;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Car getCar() {

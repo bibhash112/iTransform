@@ -1,43 +1,30 @@
 package com.carwash.cardetails.resource;
+import org.bson.Document;
 import com.carwash.cardetails.model.Car;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 
 public class CarTest {
 	
 	public static Object returnCar()
 	{
-		 try{
-             
-             @SuppressWarnings("resource")
-             MongoClient mongo = new MongoClient( "ec2-18-190-25-192.us-east-2.compute.amazonaws.com" , 27017 );  
-             
-             @SuppressWarnings("deprecation")
-             DB db = mongo.getDB("CarWash");  
-             
-             DBCollection table = db.getCollection("Car");  
-             System.out.println("Data received successfully");
-         	BasicDBObject searchQuery = new BasicDBObject();
-         	searchQuery.put("_id", 102);
-         	DBCursor cursor = table.find(searchQuery);
-         	 
-         	while (cursor.hasNext()) {
-         		Car car = new Car((int)cursor.one().get("_id"), cursor.one().get("owner").toString(), cursor.one().get("type").toString(), cursor.one().get("model").toString());
-        	    return car;
-         	  
-         	}
-             //return (int)cursor.one().get("code");
-		      }
-			  catch(Exception e)
-			  {
-				  System.out.println("0");
-				  return null;
-			  }
-		return null;
+
+		MongoClientURI uri = new MongoClientURI(
+			    "mongodb+srv://admin:admin@cluster0.u9q0x.mongodb.net/test?retryWrites=true&w=majority");
+
+			MongoClient mongoClient = new MongoClient(uri);
+			MongoDatabase database = mongoClient.getDatabase("test");
+			MongoCollection<Document> collection = database.getCollection("test");
+			BasicDBObject query = new BasicDBObject();
+			query.put("id", "101");
+			Document result = collection.find(query).iterator().next();
+			mongoClient.close();
+			return new Car(result.getString("id"), result.getString("owner"), result.getString("type"), result.getString("model"));
+			//System.out.println(result.getString("test3"));
 	}
 	
 	public static void main(String[] args)
